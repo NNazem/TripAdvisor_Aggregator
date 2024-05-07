@@ -10,5 +10,5 @@ import java.util.List;
 @Setter
 @ToString
 public class ReviewData {
-    private List<Review> data;
+    public List<Review> data;
 }

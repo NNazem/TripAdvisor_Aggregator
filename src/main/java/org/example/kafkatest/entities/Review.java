@@ -1,10 +1,12 @@
 package org.example.kafkatest.entities;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.apache.kafka.common.protocol.types.Field;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.Date;
 import java.util.Map;
@@ -19,15 +21,15 @@ public class Review {
     private Integer location_id;
     private String published_date;
     private Integer rating;
-    private Integer helpful_votes;
-    private String rating_image_url;
+    private Integer helpfulVotes;
+    private String ratingImageUrl;
     private String url;
-    private String trip_type;
-    private String travel_date;
+    private String tripType;
+    private String travelDate;
     private String text;
     private String title;
     private OwnerResponse owner_response;
-    private Boolean is_machine_translated;
+    private Boolean isMachineTranslated;
     private User user;
     private Map<String, Subrating> subratings;
 
