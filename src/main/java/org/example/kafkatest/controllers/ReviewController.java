@@ -1,6 +1,7 @@
 package org.example.kafkatest.controllers;
 
 import lombok.AllArgsConstructor;
+import org.example.kafkatest.aggregations.ReviewAggregationResult;
 import org.example.kafkatest.entities.Review;
 import org.example.kafkatest.services.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,5 +50,10 @@ public class ReviewController {
     public ResponseEntity<List<Review>> getReviews(@PathVariable String location_id){
         List<Review> reviews = reviewService.getReviewsByLocationId(location_id);
         return ResponseEntity.ok(reviews);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ReviewAggregationResult>> getAllReviews(){
+        return ResponseEntity.ok(reviewService.getReviewAggregationResult());
     }
 }

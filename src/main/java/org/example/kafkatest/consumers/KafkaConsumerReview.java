@@ -22,7 +22,7 @@ public class KafkaConsumerReview {
     public void consume(String message) throws IOException {
         Gson gson = new Gson();
         ReviewData reviewData = gson.fromJson(message, ReviewData.class);
-        List<Review> reviews = reviewData.data;
+        List<Review> reviews = reviewData.getData();
 
         for (Review review : reviews) {
             boolean success = service.saveReview(review);

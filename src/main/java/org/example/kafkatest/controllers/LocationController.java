@@ -1,5 +1,8 @@
 package org.example.kafkatest.controllers;
 
+import lombok.AllArgsConstructor;
+import org.example.kafkatest.aggregations.LocationAggregationResult;
+import org.example.kafkatest.services.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -10,10 +13,14 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
 
 @RestController
 @RequestMapping("/locations")
+@AllArgsConstructor
 public class LocationController {
+
+    private LocationService locationService;
 
     @Autowired KafkaTemplate<String, String> kafkaTemplate;
 
@@ -37,6 +44,11 @@ public class LocationController {
         kafkaTemplate.send(LOCATION, response.body());
 
         return ResponseEntity.ok("Published Successfully");
+    }
+
+    @GetMapping
+    public ResponseEntity<List<LocationAggregationResult>> getLocations(){
+        return ResponseEntity.ok(locationService.getLocationAggregated());
     }
 
 }

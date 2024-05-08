@@ -1,6 +1,7 @@
 package org.example.kafkatest.services;
 
 import lombok.AllArgsConstructor;
+import org.example.kafkatest.aggregations.ReviewAggregationResult;
 import org.example.kafkatest.repositories.ReviewRepository;
 import org.example.kafkatest.entities.Review;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,11 @@ public class ReviewService {
         }
     }
 
-
     public List<Review> getReviewsByLocationId(String locationId) {
         return reviewRepository.findReviewByLocation_id(Integer.valueOf(locationId));
+    }
+
+    public List<ReviewAggregationResult> getReviewAggregationResult() {
+        return reviewRepository.aggregateReviews().getMappedResults();
     }
 }

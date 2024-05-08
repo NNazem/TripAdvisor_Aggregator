@@ -1,6 +1,7 @@
 package org.example.kafkatest.services;
 
 import lombok.AllArgsConstructor;
+import org.example.kafkatest.aggregations.LocationAggregationResult;
 import org.example.kafkatest.repositories.LocationRepository;
 import org.example.kafkatest.entities.Location;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -34,6 +36,10 @@ public class LocationService {
         }catch (Exception e){
             return false;
         }
+    }
+
+    public List<LocationAggregationResult> getLocationAggregated() {
+        return locationRepository.aggregateLocations().getMappedResults();
     }
 
 }
