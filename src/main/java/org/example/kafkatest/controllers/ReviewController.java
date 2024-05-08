@@ -56,4 +56,9 @@ public class ReviewController {
     public ResponseEntity<List<ReviewAggregationResult>> getAllReviews(){
         return ResponseEntity.ok(reviewService.getReviewAggregationResult());
     }
+
+    @GetMapping("/loadToPostgres")
+    public ResponseEntity<String> loadToPostgres(){
+        return ResponseEntity.ok(reviewService.loadToPostgres());
+    }
 }

@@ -2,8 +2,10 @@ package org.example.kafkatest.services;
 
 import lombok.AllArgsConstructor;
 import org.example.kafkatest.aggregations.LocationAggregationResult;
+import org.example.kafkatest.aggregations.LocationAggregationWithAvgResult;
 import org.example.kafkatest.repositories.LocationRepository;
 import org.example.kafkatest.entities.Location;
+import org.example.kafkatest.repositories.LocationRepositoryPostGres;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -18,6 +20,7 @@ import java.util.List;
 public class LocationService {
 
     private LocationRepository locationRepository;
+    private LocationRepositoryPostGres locationRepositoryPostGres;
 
     public boolean saveLocation(Location location) {
         try{
@@ -40,6 +43,14 @@ public class LocationService {
 
     public List<LocationAggregationResult> getLocationAggregated() {
         return locationRepository.aggregateLocations().getMappedResults();
+    }
+
+    public String loadToPostgres(){
+        List<LocationAggregationWithAvgResult> locations = locationRepository.aggregateLocationWithAvg().getMappedResults();
+        locations.stream().forEach(x -> locationRepositoryPostGres.save(x));
+
+        return "Ok";
+
     }
 
 }

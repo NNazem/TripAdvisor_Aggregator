@@ -51,4 +51,10 @@ public class LocationController {
         return ResponseEntity.ok(locationService.getLocationAggregated());
     }
 
+    @GetMapping("/loadToPostgres")
+    public ResponseEntity<String> loadToPostgres(){
+        return ResponseEntity.ok(locationService.loadToPostgres());
+    }
+
+
 }
