@@ -6,6 +6,9 @@ import org.example.kafkatest.aggregations.LocationAggregationWithAvgResult;
 import org.example.kafkatest.repositories.LocationRepository;
 import org.example.kafkatest.entities.Location;
 import org.example.kafkatest.repositories.LocationRepositoryPostGres;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -14,6 +17,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -41,8 +45,8 @@ public class LocationService {
         }
     }
 
-    public List<LocationAggregationResult> getLocationAggregated() {
-        return locationRepository.aggregateLocations().getMappedResults();
+    public List<LocationAggregationResult> getLocationAggregated(Pageable pageable) {
+        return locationRepository.aggregateLocations(pageable);
     }
 
     public String loadToPostgres(){

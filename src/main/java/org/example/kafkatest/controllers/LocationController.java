@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import org.example.kafkatest.aggregations.LocationAggregationResult;
 import org.example.kafkatest.services.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/locations")
 @AllArgsConstructor
+@CrossOrigin("*")
 public class LocationController {
 
     private LocationService locationService;
@@ -47,8 +50,10 @@ public class LocationController {
     }
 
     @GetMapping
-    public ResponseEntity<List<LocationAggregationResult>> getLocations(){
-        return ResponseEntity.ok(locationService.getLocationAggregated());
+    public ResponseEntity<List<LocationAggregationResult>> getLocations(
+            @RequestParam(defaultValue = "0") int page){
+        Pageable pageable = PageRequest.of(page, 10);
+        return ResponseEntity.ok(locationService.getLocationAggregated(pageable));
     }
 
     @GetMapping("/loadToPostgres")
